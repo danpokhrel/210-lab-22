@@ -111,12 +111,17 @@ public:
             curr = curr->next;
             i++;
         }
+        if (!curr) return; // out of bounds
 
         // Handle head and tail
-        if (curr = head)
+        if (curr == head){
             head = curr->next;
-        if (curr = tail)
+            head->prev = nullptr;
+        }
+        if (curr == tail){
             tail = curr->prev;
+            tail->next = nullptr;
+        }
 
         // update links node
         if (curr->prev && curr->next){
@@ -131,8 +136,10 @@ public:
         if (!head) return; // Empty list
         
         Node *tmp = nullptr;
-        if (head->next)
-            Node* tmp = head->next;
+        if (head->next){
+            tmp = head->next;
+            tmp->prev = nullptr;
+        }
         delete head;
         head = tmp;
     }
@@ -141,8 +148,10 @@ public:
         if (!tail) return; // Empty list
 
         Node *tmp = nullptr;
-        if (tail->prev)
-            Node* tmp = tail->prev;
+        if (tail->prev){
+            tmp = tail->prev;
+            tmp->next = nullptr;
+        }
         delete tail;
         tail = tmp;
     }
@@ -188,7 +197,7 @@ int main() {
 
     cout << "\nEnter index to delete node: ";
     int i; cin >> i;
-    list.delete_pos(i);
+    list.delete_pos(i-1);
     cout << "\nList forward: ";
     list.print();
 
