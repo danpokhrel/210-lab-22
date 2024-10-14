@@ -1,4 +1,4 @@
-// COMSC-210 | Lab  | Dan Pokhrel
+// COMSC-210 | Lab 22 | Dan Pokhrel
 #include <iostream>
 using namespace std;
 
@@ -77,7 +77,7 @@ public:
         temp->next = newNode;
     }
 
-    void delete_node(int value) {
+    void delete_val(int value) {
         if (!head) return; // Empty list
 
         Node* temp = head;
@@ -99,6 +99,30 @@ public:
         }
 
         delete temp;
+    }
+
+    void delete_pos(int pos){
+        if (!head) return; // Empty list
+        if (pos < 0) {cout << "\nInvalid Index\n"; return;}
+
+        int i = 0;
+        Node* curr = head;
+        while (curr && i!=pos){ // loop through list until index reaches pos
+            curr = curr->next;
+            i++;
+        }
+
+        // Handle head and tail
+        if (curr = head)
+            head = curr->next;
+        if (curr = tail)
+            tail = curr->prev;
+
+        // update links node
+        curr->prev->next = curr->next;
+        curr->next->prev = curr->prev;
+        // delete node
+        delete curr;
     }
 
     void print() {
