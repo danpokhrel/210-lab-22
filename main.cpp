@@ -119,10 +119,32 @@ public:
             tail = curr->prev;
 
         // update links node
-        curr->prev->next = curr->next;
-        curr->next->prev = curr->prev;
+        if (curr->prev && curr->next){
+            curr->prev->next = curr->next;
+            curr->next->prev = curr->prev;
+        }
         // delete node
         delete curr;
+    }
+
+    void pop_front(){
+        if (!head) return; // Empty list
+        
+        Node *tmp = nullptr;
+        if (head->next)
+            Node* tmp = head->next;
+        delete head;
+        head = tmp;
+    }
+
+    void pop_back(){
+        if (!tail) return; // Empty list
+
+        Node *tmp = nullptr;
+        if (tail->prev)
+            Node* tmp = tail->prev;
+        delete tail;
+        tail = tmp;
     }
 
     void print() {
@@ -157,19 +179,27 @@ public:
 // Driver program
 int main() {
     DoublyLinkedList list;
-    int size = rand() % (MAX_LS-MIN_LS+1) + MIN_LS;
+    int size = rand() % (MAX_LS-MIN_LS+1) + MIN_LS; // random list size
 
-    for (int i = 0; i < size; ++i)
+    for (int i = 0; i < size; ++i) // populate list
         list.push_back(rand() % (MAX_NR-MIN_NR+1) + MIN_NR);
     cout << "List forward: ";
     list.print();
 
-    cout << "List backward: ";
-    list.print_reverse();
+    cout << "\nEnter index to delete node: ";
+    int i; cin >> i;
+    list.delete_pos(i);
+    cout << "\nList forward: ";
+    list.print();
 
-    cout << "Deleting list, then trying to print.\n";
-    list.~DoublyLinkedList();
-    cout << "List forward: ";
+    cout << "\nDeleting head node...";
+    list.pop_front();
+    cout << "\nList forward: ";
+    list.print();
+
+    cout << "\nDeleting tail node...";
+    list.pop_back();
+    cout << "\nList forward: ";
     list.print();
 
     return 0;
